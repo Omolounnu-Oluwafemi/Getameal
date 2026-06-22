@@ -26,7 +26,7 @@ import {
   SafeAreaView,
   useSafeAreaInsets,
 } from "react-native-safe-area-context";
-import { Defs, Ellipse, RadialGradient, Stop, Svg } from "react-native-svg";
+import { Circle, Defs, FeGaussianBlur, Filter, Svg } from "react-native-svg";
 
 const { width } = Dimensions.get("window");
 
@@ -91,6 +91,18 @@ export default function Register({ navigation }: RegisterProps) {
     }
   };
 
+  const handleContinue = () => {
+    if (!email) {
+      setEmailError("Please enter your email");
+      return;
+    }
+    if (!/\S+@\S+\.\S+/.test(email)) {
+      setEmailError("Please enter a valid email");
+      return;
+    }
+    navigation.navigate("ConfirmEmail", { email, isLogin: false });
+  };
+
   return (
     <ImageBackground
       source={require("@/assets/BackgroundImage.png")}
@@ -123,48 +135,42 @@ export default function Register({ navigation }: RegisterProps) {
                   pointerEvents="none"
                 >
                   <Defs>
-                    <RadialGradient
-                      id="pink"
-                      cx="38%"
-                      cy="42%"
-                      rx="38%"
-                      ry="38%"
+                    <Filter
+                      id="glow"
+                      x="-300%"
+                      y="-300%"
+                      width="700%"
+                      height="700%"
                     >
-                      <Stop
-                        offset="0%"
-                        stopColor="#FFB3A7"
-                        stopOpacity="0.75"
-                      />
-                      <Stop offset="100%" stopColor="#FFFFFF" stopOpacity="0" />
-                    </RadialGradient>
-                    <RadialGradient
-                      id="green"
-                      cx="62%"
-                      cy="42%"
-                      rx="38%"
-                      ry="38%"
-                    >
-                      <Stop
-                        offset="0%"
-                        stopColor="#A8DDB5"
-                        stopOpacity="0.65"
-                      />
-                      <Stop offset="100%" stopColor="#FFFFFF" stopOpacity="0" />
-                    </RadialGradient>
+                      <FeGaussianBlur stdDeviation="45" />
+                    </Filter>
                   </Defs>
-                  <Ellipse
-                    cx="38%"
-                    cy="42%"
-                    rx="38%"
-                    ry="38%"
-                    fill="url(#pink)"
+                  {/* Red — left side */}
+                  <Circle
+                    cx={width * 0.25}
+                    cy={130}
+                    r={35}
+                    fill="#FD1E1E"
+                    opacity={0.9}
+                    filter="url(#glow)"
                   />
-                  <Ellipse
-                    cx="62%"
-                    cy="42%"
-                    rx="38%"
-                    ry="38%"
-                    fill="url(#green)"
+                  {/* Orange — center */}
+                  <Circle
+                    cx={width * 0.5}
+                    cy={110}
+                    r={35}
+                    fill="#FFA600"
+                    opacity={0.9}
+                    filter="url(#glow)"
+                  />
+                  {/* Green — right side */}
+                  <Circle
+                    cx={width * 0.7}
+                    cy={130}
+                    r={35}
+                    fill="#00A45E"
+                    opacity={0.9}
+                    filter="url(#glow)"
                   />
                 </Svg>
 
@@ -240,12 +246,7 @@ export default function Register({ navigation }: RegisterProps) {
 
                   <Button
                     title="Continue"
-                    onPress={() =>
-                      navigation.navigate("ConfirmEmail", {
-                        email,
-                        isLogin: false,
-                      })
-                    }
+                    onPress={handleContinue}
                     variant="primary"
                     fullWidth
                   />
