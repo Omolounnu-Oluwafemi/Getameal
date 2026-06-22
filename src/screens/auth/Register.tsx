@@ -150,7 +150,7 @@ export default function Register({ navigation }: RegisterProps) {
                     cx={width * 0.25}
                     cy={130}
                     r={35}
-                    fill="#FD1E1E"
+                    fill={Colors.glowRed}
                     opacity={0.9}
                     filter="url(#glow)"
                   />
@@ -159,7 +159,7 @@ export default function Register({ navigation }: RegisterProps) {
                     cx={width * 0.5}
                     cy={110}
                     r={35}
-                    fill="#FFA600"
+                    fill={Colors.glowOrange}
                     opacity={0.9}
                     filter="url(#glow)"
                   />
@@ -168,7 +168,7 @@ export default function Register({ navigation }: RegisterProps) {
                     cx={width * 0.7}
                     cy={130}
                     r={35}
-                    fill="#00A45E"
+                    fill={Colors.glowGreen}
                     opacity={0.9}
                     filter="url(#glow)"
                   />
@@ -264,7 +264,7 @@ export default function Register({ navigation }: RegisterProps) {
                     onPress={() => {}}
                     variant="outline"
                     fullWidth
-                    icon={<Ionicons name="logo-apple" size={20} color="#000" />}
+                    icon={<Ionicons name="logo-apple" size={20} color={Colors.primary} />}
                     iconPosition="left"
                   />
 

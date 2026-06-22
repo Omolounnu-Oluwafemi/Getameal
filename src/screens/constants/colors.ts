@@ -34,6 +34,11 @@ export const Colors = {
     transparent: 'transparent',
     
     // Home
-    cookingTime: '#209D01'
+    cookingTime: '#209D01',
+
+    // Glow blobs
+    glowRed: '#FD1E1E',
+    glowOrange: '#FFA600',
+    glowGreen: '#00A45E',
   };
   
