@@ -10,6 +10,9 @@ export const Colors = {
     textLight: '#989898',
     textDisabled: '#999999',
     gray800: '#333333',
+    gray700: '#5C5C5C',
+    gray550: '#797979',
+    gray500: '#8E8E8E',
     textPlaceholder: '#C3C3C3',
   
     // Backgrounds

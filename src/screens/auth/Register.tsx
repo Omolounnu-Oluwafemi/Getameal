@@ -1,120 +1,304 @@
-import React, { useState } from 'react';
+import GoogleIcon from "@/assets/google.svg";
+import StarIcon from "@/assets/icons/ic_round-star.svg";
+import Button from "@/components/Button";
+import TextInput from "@/components/TextInput";
+import { RootStackParamList } from "@/navigation/AppNavigator";
+import { Colors } from "@/screens/constants/colors";
+import Ionicons from "@expo/vector-icons/Ionicons";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { LinearGradient } from "expo-linear-gradient";
+import React, { useState } from "react";
 import {
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity,
-  StatusBar,
   Dimensions,
+  Image,
   ImageBackground,
+  Keyboard,
   KeyboardAvoidingView,
   Platform,
   ScrollView,
+  StatusBar,
+  StyleSheet,
+  Text,
   TouchableWithoutFeedback,
-  Keyboard,
-} from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { RootStackParamList } from '@/navigation/AppNavigator';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import TextInput from '@/components/TextInput';
+  View,
+} from "react-native";
+import {
+  SafeAreaView,
+  useSafeAreaInsets,
+} from "react-native-safe-area-context";
+import { Defs, Ellipse, RadialGradient, Stop, Svg } from "react-native-svg";
 
-const { width, height } = Dimensions.get('window');
+const { width } = Dimensions.get("window");
+
+const COLLAGE_SPAN = 337;
+const collageLeft = (width - COLLAGE_SPAN) / 2;
+const COLLAGE_H = 180;
+
+const cookPhotos = [
+  {
+    source: require("@/assets/onboarding/Landing1.png"),
+    w: 103,
+    h: 103,
+    rotate: "-8.16deg",
+    top: 35,
+    baseLeft: 0,
+    zIndex: 2,
+  },
+  {
+    source: require("@/assets/onboarding/Landing2.png"),
+    w: 103,
+    h: 117,
+    rotate: "11.44deg",
+    top: 15,
+    baseLeft: 69,
+    zIndex: 1,
+  },
+  {
+    source: require("@/assets/onboarding/Landing3.png"),
+    w: 103,
+    h: 103,
+    rotate: "-8.61deg",
+    top: 32,
+    baseLeft: 155,
+    zIndex: 3,
+  },
+  {
+    source: require("@/assets/onboarding/Landing4.png"),
+    w: 103,
+    h: 110,
+    rotate: "12.87deg",
+    top: 32,
+    baseLeft: 234,
+    zIndex: 4,
+  },
+];
 
 type RegisterProps = {
-  navigation: NativeStackNavigationProp<RootStackParamList, 'Register'>;
+  navigation: NativeStackNavigationProp<RootStackParamList, "Register">;
 };
 
 export default function Register({ navigation }: RegisterProps) {
-  const [email, setEmail] = useState('');
-  const [emailError, setEmailError] = useState('');
+  const [email, setEmail] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const insets = useSafeAreaInsets();
 
   const validateEmail = (text: string) => {
     setEmail(text);
     if (text && !/\S+@\S+\.\S+/.test(text)) {
-      setEmailError('Please enter a valid email');
+      setEmailError("Please enter a valid email");
     } else {
-      setEmailError('');
+      setEmailError("");
     }
   };
 
   return (
-    <View style={styles.container}>
-      <StatusBar barStyle="dark-content" translucent backgroundColor="transparent" />
-      
-      <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        style={styles.keyboardView}
-        keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 0}
-      >
-        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-          <ScrollView
-            contentContainerStyle={styles.scrollContent}
-            showsVerticalScrollIndicator={false}
-            keyboardShouldPersistTaps="handled"
-            bounces={false}
-          >
-            <ImageBackground
-              source={require('@/assets/WithwithGeta.png')}
-              style={styles.backgroundImage}
-              resizeMode="cover"
+    <ImageBackground
+      source={require("@/assets/BackgroundImage.png")}
+      style={styles.root}
+      resizeMode="cover"
+    >
+      <SafeAreaView edges={["top"]} style={styles.container}>
+        <StatusBar
+          barStyle="dark-content"
+          translucent
+          backgroundColor="transparent"
+        />
+
+        <KeyboardAvoidingView
+          behavior={Platform.OS === "ios" ? "padding" : "height"}
+          style={styles.keyboardView}
+        >
+          <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+            <ScrollView
+              contentContainerStyle={styles.scrollContent}
+              showsVerticalScrollIndicator={false}
+              keyboardShouldPersistTaps="handled"
+              bounces={false}
             >
-              <SafeAreaView edges={['top']} style={styles.imageContent}>
-                <View style={styles.spacer} />
-
-                {/* Alpha Logo and text at bottom of image */}
-                <LinearGradient
-                  colors={['rgba(255, 255, 255, 0.1)', 'rgba(255, 255, 255, 0.9)', 'rgba(255, 255, 255, 1)']}
-                  style={styles.titleContainer}
-                  locations={[0, 0.5, 1]}
+              <View style={styles.collageContainer}>
+                <Svg
+                  width={width}
+                  height={COLLAGE_H + 100}
+                  style={styles.glowSvg}
+                  pointerEvents="none"
                 >
-                  <Text style={styles.title}>Get started on Getameal</Text>
-                  <Text style={styles.subtitle}>
-                    Pre-order fresh meals from local cooks near you. 
-                  </Text>
-                </LinearGradient>
-              </SafeAreaView>
-            </ImageBackground>
+                  <Defs>
+                    <RadialGradient
+                      id="pink"
+                      cx="38%"
+                      cy="42%"
+                      rx="38%"
+                      ry="38%"
+                    >
+                      <Stop
+                        offset="0%"
+                        stopColor="#FFB3A7"
+                        stopOpacity="0.75"
+                      />
+                      <Stop offset="100%" stopColor="#FFFFFF" stopOpacity="0" />
+                    </RadialGradient>
+                    <RadialGradient
+                      id="green"
+                      cx="62%"
+                      cy="42%"
+                      rx="38%"
+                      ry="38%"
+                    >
+                      <Stop
+                        offset="0%"
+                        stopColor="#A8DDB5"
+                        stopOpacity="0.65"
+                      />
+                      <Stop offset="100%" stopColor="#FFFFFF" stopOpacity="0" />
+                    </RadialGradient>
+                  </Defs>
+                  <Ellipse
+                    cx="38%"
+                    cy="42%"
+                    rx="38%"
+                    ry="38%"
+                    fill="url(#pink)"
+                  />
+                  <Ellipse
+                    cx="62%"
+                    cy="42%"
+                    rx="38%"
+                    ry="38%"
+                    fill="url(#green)"
+                  />
+                </Svg>
 
-            {/* Content Card with buttons */}
-            <View style={styles.contentCard}>
-              <View style={styles.buttonContainer}>
-                <TextInput
-                  label="Email address"
-                  placeholder="Enter your email"
-                  value={email}
-                  onChangeText={validateEmail}
-                  error={emailError}
-                  keyboardType="email-address"
-                  autoCapitalize="none"
-                  autoComplete="email"
+                {cookPhotos.map((photo, index) => (
+                  <View
+                    key={index}
+                    style={[
+                      styles.photoShadow,
+                      {
+                        position: "absolute",
+                        top: photo.top,
+                        left: collageLeft + photo.baseLeft,
+                        width: photo.w,
+                        height: photo.h,
+                        zIndex: photo.zIndex,
+                        transform: [{ rotate: photo.rotate }],
+                      },
+                    ]}
+                  >
+                    <View style={styles.photoClip}>
+                      <Image
+                        source={photo.source}
+                        style={styles.cookImage}
+                        resizeMode="cover"
+                      />
+                    </View>
+                  </View>
+                ))}
+              </View>
+
+              {/* White backing — fills all remaining space reliably */}
+              <View
+                style={[
+                  styles.contentCard,
+                  { paddingBottom: Math.max(40, insets.bottom + 24) },
+                ]}
+              >
+                {/* Fade strip from transparent → white over the collage bottom */}
+                <LinearGradient
+                  colors={["rgba(255,255,255,0)", "rgba(255,255,255,1)"]}
+                  style={styles.fadeStrip}
+                  locations={[0, 1]}
+                  pointerEvents="none"
                 />
 
-                <TouchableOpacity 
-                  style={styles.registerButton} 
-                  onPress={() => navigation.navigate('ConfirmEmail', { email, isLogin: false })}
-                >
-                  <Text style={styles.registerButtonText}>Continue</Text>
-                </TouchableOpacity>
+                {/* Title & Stars */}
+                <View style={styles.headerContent}>
+                  <Text style={styles.title}>
+                    Join Smart Home Cooks{"\n"}Selling With Getameal
+                  </Text>
+                  <View style={styles.starsRow}>
+                    {[...Array(5)].map((_, i) => (
+                      <StarIcon key={i} width={24} height={24} />
+                    ))}
+                  </View>
+                  <Text style={styles.subtitle}>
+                    Over 2000 cooks and counting
+                  </Text>
+                </View>
+
+                {/* Form */}
+                <View style={styles.form}>
+                  <TextInput
+                    label="Email address"
+                    placeholder="Enter your email"
+                    value={email}
+                    onChangeText={validateEmail}
+                    error={emailError}
+                    keyboardType="email-address"
+                    autoCapitalize="none"
+                    autoComplete="email"
+                  />
+
+                  <Button
+                    title="Continue"
+                    onPress={() =>
+                      navigation.navigate("ConfirmEmail", {
+                        email,
+                        isLogin: false,
+                      })
+                    }
+                    variant="primary"
+                    fullWidth
+                  />
+
+                  {/* OR Divider */}
+                  <View style={styles.divider}>
+                    <View style={styles.dividerLine} />
+                    <Text style={styles.dividerText}>OR</Text>
+                    <View style={styles.dividerLine} />
+                  </View>
+
+                  {/* Social Buttons */}
+                  <Button
+                    title="Continue with Apple"
+                    onPress={() => {}}
+                    variant="outline"
+                    fullWidth
+                    icon={<Ionicons name="logo-apple" size={20} color="#000" />}
+                    iconPosition="left"
+                  />
+
+                  <Button
+                    title="Continue with Google"
+                    onPress={() => {}}
+                    variant="outline"
+                    fullWidth
+                    icon={<GoogleIcon width={20} height={20} />}
+                    iconPosition="left"
+                  />
+
+                  {/* Privacy Policy */}
+                  <Text style={styles.privacyText}>
+                    By continuing, you agree to our{" "}
+                    <Text style={styles.privacyLink}>Terms</Text> &{" "}
+                    <Text style={styles.privacyLink}>Privacy Policy.</Text>
+                  </Text>
+                </View>
               </View>
-              
-              <TouchableOpacity onPress={() => navigation.navigate("Home")}>
-                <Text style={styles.AlreadyText}>
-                  Already have an account? <Text style={styles.loginLink}>Log in</Text>
-                </Text>
-              </TouchableOpacity>
-            </View>
-          </ScrollView>
-        </TouchableWithoutFeedback>
-      </KeyboardAvoidingView>
-    </View>
+            </ScrollView>
+          </TouchableWithoutFeedback>
+        </KeyboardAvoidingView>
+      </SafeAreaView>
+    </ImageBackground>
   );
 }
 
 const styles = StyleSheet.create({
+  root: {
+    flex: 1,
+    backgroundColor: Colors.background,
+  },
   container: {
     flex: 1,
-    backgroundColor: '#fff',
   },
   keyboardView: {
     flex: 1,
@@ -122,79 +306,103 @@ const styles = StyleSheet.create({
   scrollContent: {
     flexGrow: 1,
   },
-  backgroundImage: {
-    width: width,
-    height: height * 0.65,
-    justifyContent: 'flex-start',
-    marginBottom: 20,
+  collageContainer: {
+    height: COLLAGE_H,
+    width,
+    marginTop: 60,
+    marginBottom: 8,
   },
-  imageContent: {
-    flex: 1,
-    justifyContent: 'space-between',
+  glowSvg: {
+    position: "absolute",
+    top: -60,
+    left: 0,
   },
-  logoContainer: {
-    alignItems: 'center',
-    paddingTop: 20,
-    paddingBottom: 10,
+  photoShadow: {
+    shadowColor: Colors.primary,
+    shadowOffset: { width: 0, height: 3.56 },
+    shadowOpacity: 0.3,
+    shadowRadius: 13.36,
+    elevation: 8,
   },
-  spacer: {
-    flex: 1,
+  photoClip: {
+    width: "100%",
+    height: "100%",
+    borderRadius: 17.81,
+    overflow: "hidden",
+    borderWidth: 0.89,
+    borderColor: Colors.border,
   },
-  bottomContainer: {
-    alignItems: 'center',
-    paddingHorizontal: 24,
-    paddingBottom: 60,
-  },
-  titleContainer: {
-    alignItems: 'center',
-    paddingHorizontal: 24,
-    paddingBottom: 15,
+  cookImage: {
+    width: "100%",
+    height: "100%",
   },
   contentCard: {
     flex: 1,
-    backgroundColor: '#fff',
-    paddingHorizontal: 24,
-    marginTop: 20,
+    backgroundColor: Colors.background,
     paddingBottom: 40,
   },
+  fadeStrip: {
+    position: "absolute",
+    top: -50,
+    left: 0,
+    right: 0,
+    height: 60,
+  },
+  headerContent: {
+    alignItems: "center",
+    paddingHorizontal: 24,
+    paddingTop: 0,
+    paddingBottom: 20,
+  },
   title: {
-    fontSize: 24,
-    fontWeight: '700',
-    color: '#000000', 
-    textAlign: 'center',
-    marginBottom: 12,
+    fontSize: 28,
+    fontWeight: "700",
+    color: Colors.primary,
+    textAlign: "center",
+    marginBottom: 15,
+    lineHeight: 32,
+  },
+  starsRow: {
+    flexDirection: "row",
+    gap: 4,
+    marginBottom: 15,
   },
   subtitle: {
-    fontSize: 16,
-    color: '#5C5C5C',
-    textAlign: 'center',
-    lineHeight: 22,
-  },
-  buttonContainer: {
-    gap: 4,
-  },
-  registerButton: {
-    backgroundColor: '#1B8601',
-    paddingVertical: 16,
-    borderRadius: 12,
-    alignItems: 'center',
-    flexDirection: 'row',
-    justifyContent: 'center',
-  },
-  registerButtonText: {
-    fontSize: 16,
-    fontWeight: '600',
-    color: '#fff',
-  },
-  AlreadyText: {
-    textAlign: 'center',
     fontSize: 14,
-    fontWeight: '600',
-    color: '#000',
-    marginTop: 50,
+    color: Colors.gray700,
+    textAlign: "center",
   },
-  loginLink: {
-    fontWeight: '700',
-    color: '#000',
+  form: {
+    paddingHorizontal: 24,
+    gap: 12,
+    marginTop: 10,
+  },
+  divider: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginVertical: 4,
+  },
+  dividerLine: {
+    flex: 1,
+    height: 1,
+    backgroundColor: Colors.border,
+  },
+  dividerText: {
+    marginHorizontal: 12,
+    fontSize: 13,
+    color: Colors.primary,
+    fontWeight: "600",
+  },
+  privacyText: {
+    textAlign: "center",
+    fontSize: 12,
+    color: Colors.gray500,
+    marginTop: 40,
+    lineHeight: 18,
+  },
+  privacyLink: {
+    textDecorationLine: "underline",
+    color: Colors.gray550,
+    fontWeight: "500",
   },
 });
