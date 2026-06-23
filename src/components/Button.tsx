@@ -92,7 +92,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#209D01",
   },
   secondary: {
-    backgroundColor: "#F7F7F7",
+    backgroundColor: "#EDEDED",
   },
   outline: {
     backgroundColor: "#F7F7F7",

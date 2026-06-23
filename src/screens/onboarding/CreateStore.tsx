@@ -1,26 +1,29 @@
+import ChefsIllustration from "@/assets/onboarding/2Chefs.svg";
+import StoreIcon from "@/assets/onboarding/clarity_store-line.svg";
+import LinkIcon from "@/assets/onboarding/si_link-duotone.svg";
+import PhoneIcon from "@/assets/onboarding/solar_phone-linear.svg";
 import Button from "@/components/Button";
+import FieldModal from "@/components/FieldModal";
 import { RootStackParamList } from "@/navigation/AppNavigator";
 import { Colors } from "@/screens/constants/colors";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { LinearGradient } from "expo-linear-gradient";
 import React, { useState } from "react";
 import {
   Dimensions,
   ImageBackground,
-  Keyboard,
-  KeyboardAvoidingView,
-  Modal,
-  Platform,
   ScrollView,
   StatusBar,
   StyleSheet,
   Text,
-  TextInput,
   TouchableOpacity,
-  TouchableWithoutFeedback,
   View,
 } from "react-native";
-import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
+import {
+  SafeAreaView,
+  useSafeAreaInsets,
+} from "react-native-safe-area-context";
 
 const { width, height } = Dimensions.get("window");
 
@@ -81,11 +84,18 @@ export default function CreateStore({ navigation }: CreateStoreProps) {
       resizeMode="cover"
     >
       <SafeAreaView edges={["top"]} style={styles.container}>
-        <StatusBar barStyle="dark-content" translucent backgroundColor="transparent" />
+        <StatusBar
+          barStyle={activeModal ? "light-content" : "dark-content"}
+          translucent
+          backgroundColor="transparent"
+        />
 
         {/* Header */}
         <View style={styles.header}>
-          <TouchableOpacity style={styles.backBtn} onPress={() => navigation.goBack()}>
+          <TouchableOpacity
+            style={styles.backBtn}
+            onPress={() => navigation.goBack()}
+          >
             <Ionicons name="chevron-back" size={24} color={Colors.primary} />
           </TouchableOpacity>
           <View style={styles.stepPill}>
@@ -94,226 +104,155 @@ export default function CreateStore({ navigation }: CreateStoreProps) {
           <View style={styles.backBtn} />
         </View>
 
-        <ScrollView
-          contentContainerStyle={[
-            styles.scroll,
-            { paddingBottom: Math.max(40, insets.bottom + 24) },
-          ]}
-          showsVerticalScrollIndicator={false}
+        <LinearGradient
+          colors={["rgba(255, 255, 255, 0)", "#ffffff"]}
+          locations={[0, 0.7]}
+          style={styles.gradientBg}
         >
-          <Text style={styles.title}>Create your store.</Text>
-          <Text style={styles.subtitle}>Takes less than 2 mins</Text>
+          <ScrollView
+            contentContainerStyle={[
+              styles.scroll,
+              { paddingBottom: Math.max(40, insets.bottom + 24) },
+            ]}
+            showsVerticalScrollIndicator={false}
+          >
+            <Text style={styles.title}>Create your store.</Text>
+            <Text style={styles.subtitle}>Takes less than 2 mins</Text>
 
-          {/* Chef illustration — replace with image asset when available */}
-          <View style={styles.illustrationWrap}>
-            <Ionicons name="people-outline" size={100} color={Colors.border} />
-          </View>
+            <View style={styles.illustrationWrap}>
+              <ChefsIllustration width="100%" height="100%" />
+            </View>
 
-          {/* Form rows */}
-          <View style={styles.rows}>
-            <TouchableOpacity
-              style={styles.row}
-              onPress={() => openModal("storeName")}
-              activeOpacity={0.7}
-            >
-              <View style={styles.rowIconWrap}>
-                <Ionicons
-                  name={storeName ? "storefront-outline" : "add"}
-                  size={22}
-                  color={Colors.primary}
-                />
-              </View>
-              <View style={styles.rowContent}>
-                <Text style={styles.rowLabel}>Store name</Text>
-                <Text style={storeName ? styles.rowValue : styles.rowPlaceholder}>
-                  {storeName || "Example: Amaka's Kitchen"}
-                </Text>
-              </View>
-              <Ionicons name="chevron-forward" size={18} color={Colors.border} />
-            </TouchableOpacity>
+            {/* Form rows */}
+            <View style={styles.rows}>
+              <TouchableOpacity
+                style={styles.row}
+                onPress={() => openModal("storeName")}
+                activeOpacity={0.7}
+              >
+                <View style={styles.rowIconWrap}>
+                  {storeName ? (
+                    <StoreIcon width={22} height={22} />
+                  ) : (
+                    <Ionicons name="add" size={22} color={Colors.primary} />
+                  )}
+                </View>
+                <View style={styles.rowContent}>
+                  <Text style={styles.rowLabel}>Store name</Text>
+                  <Text
+                    style={storeName ? styles.rowValue : styles.rowPlaceholder}
+                  >
+                    {storeName || "Example: Amaka's Kitchen"}
+                  </Text>
+                </View>
+                <Ionicons name="chevron-forward" size={18} color="#989898" />
+              </TouchableOpacity>
 
-            <View style={styles.rowDivider} />
+              <TouchableOpacity
+                style={styles.row}
+                onPress={() => openModal("storeHandle")}
+                activeOpacity={0.7}
+              >
+                <View style={styles.rowIconWrap}>
+                  {storeHandle ? (
+                    <LinkIcon width={22} height={22} />
+                  ) : (
+                    <Ionicons name="add" size={22} color={Colors.primary} />
+                  )}
+                </View>
+                <View style={styles.rowContent}>
+                  <Text style={styles.rowLabel}>Store handle</Text>
+                  <Text
+                    style={
+                      storeHandle ? styles.rowValue : styles.rowPlaceholder
+                    }
+                  >
+                    {storeHandle
+                      ? `getameal.com/${storeHandle}`
+                      : "Example: getameal.com/amaka-kitchen"}
+                  </Text>
+                </View>
+                <Ionicons name="chevron-forward" size={18} color="#989898" />
+              </TouchableOpacity>
 
-            <TouchableOpacity
-              style={styles.row}
-              onPress={() => openModal("storeHandle")}
-              activeOpacity={0.7}
-            >
-              <View style={styles.rowIconWrap}>
-                <Ionicons
-                  name={storeHandle ? "link-outline" : "add"}
-                  size={22}
-                  color={Colors.primary}
-                />
-              </View>
-              <View style={styles.rowContent}>
-                <Text style={styles.rowLabel}>Store handle</Text>
-                <Text style={storeHandle ? styles.rowValue : styles.rowPlaceholder}>
-                  {storeHandle ? `getameal.com/${storeHandle}` : "Example: getameal.com/amaka-kitchen"}
-                </Text>
-              </View>
-              <Ionicons name="chevron-forward" size={18} color={Colors.border} />
-            </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.row}
+                onPress={() => openModal("phoneNumber")}
+                activeOpacity={0.7}
+              >
+                <View style={styles.rowIconWrap}>
+                  {phoneNumber ? (
+                    <PhoneIcon width={22} height={22} />
+                  ) : (
+                    <Ionicons name="add" size={22} color={Colors.primary} />
+                  )}
+                </View>
+                <View style={styles.rowContent}>
+                  <Text style={styles.rowLabel}>Phone number</Text>
+                  <Text
+                    style={
+                      phoneNumber ? styles.rowValue : styles.rowPlaceholder
+                    }
+                  >
+                    {phoneNumber || "Example: 080123456789"}
+                  </Text>
+                </View>
+                <Ionicons name="chevron-forward" size={18} color="#989898" />
+              </TouchableOpacity>
+            </View>
 
-            <View style={styles.rowDivider} />
-
-            <TouchableOpacity
-              style={styles.row}
-              onPress={() => openModal("phoneNumber")}
-              activeOpacity={0.7}
-            >
-              <View style={styles.rowIconWrap}>
-                <Ionicons
-                  name={phoneNumber ? "call-outline" : "add"}
-                  size={22}
-                  color={Colors.primary}
-                />
-              </View>
-              <View style={styles.rowContent}>
-                <Text style={styles.rowLabel}>Phone number</Text>
-                <Text style={phoneNumber ? styles.rowValue : styles.rowPlaceholder}>
-                  {phoneNumber || "Example: 080123456789"}
-                </Text>
-              </View>
-              <Ionicons name="chevron-forward" size={18} color={Colors.border} />
-            </TouchableOpacity>
-          </View>
-
-          <Button
-            title="Continue"
-            onPress={() => {
-              if (!isComplete) return;
-              // navigation.navigate('Step2') when built
-            }}
-            variant={isComplete ? "primary" : "secondary"}
-            fullWidth
-          />
-        </ScrollView>
+            <Button
+              title="Continue"
+              onPress={() => {
+                if (!isComplete) return;
+                // navigation.navigate('Step2') when built
+              }}
+              variant={isComplete ? "primary" : "secondary"}
+              fullWidth
+            />
+          </ScrollView>
+        </LinearGradient>
       </SafeAreaView>
 
-      {/* ── Store Name Modal ── */}
-      <Modal visible={activeModal === "storeName"} transparent animationType="slide" statusBarTranslucent>
-        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-          <View style={styles.modalBackdrop}>
-            <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"}>
-              <View style={[styles.sheet, { paddingBottom: Math.max(24, insets.bottom + 16) }]}>
-                <View style={styles.sheetHeader}>
-                  <Text style={styles.sheetTitle}>Add your store name</Text>
-                  <TouchableOpacity onPress={closeModal}>
-                    <Ionicons name="close" size={24} color={Colors.primary} />
-                  </TouchableOpacity>
-                </View>
+      <FieldModal
+        visible={activeModal === "storeName"}
+        title="Add your store name"
+        label="Enter store name"
+        placeholder="Enter your store name"
+        value={tempValue}
+        onChangeText={setTempValue}
+        onSave={handleSave}
+        onClose={closeModal}
+      />
 
-                <Text style={styles.sheetLabel}>Enter store name</Text>
-                <TextInput
-                  style={styles.sheetInput}
-                  value={tempValue}
-                  onChangeText={setTempValue}
-                  autoFocus
-                  placeholder="e.g. Amaka's Kitchen"
-                  placeholderTextColor={Colors.textPlaceholder}
-                  textAlign="center"
-                  returnKeyType="done"
-                  onSubmitEditing={handleSave}
-                />
+      <FieldModal
+        visible={activeModal === "storeHandle"}
+        title="Add your store handle"
+        label="Enter store handle"
+        prefix="Getameal.app/ "
+        placeholder="Store handle"
+        value={tempValue}
+        onChangeText={(t) => {
+          setTempValue(t);
+          setHandleError("");
+        }}
+        onSave={handleSave}
+        onClose={closeModal}
+        error={handleError}
+      />
 
-                <Button
-                  title="Save"
-                  onPress={handleSave}
-                  variant={tempValue ? "primary" : "secondary"}
-                  fullWidth
-                />
-              </View>
-            </KeyboardAvoidingView>
-          </View>
-        </TouchableWithoutFeedback>
-      </Modal>
-
-      {/* ── Store Handle Modal ── */}
-      <Modal visible={activeModal === "storeHandle"} transparent animationType="slide" statusBarTranslucent>
-        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-          <View style={styles.modalBackdrop}>
-            <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"}>
-              <View style={[styles.sheet, { paddingBottom: Math.max(24, insets.bottom + 16) }]}>
-                <View style={styles.sheetHeader}>
-                  <Text style={styles.sheetTitle}>Add your store handle</Text>
-                  <TouchableOpacity onPress={closeModal}>
-                    <Ionicons name="close" size={24} color={Colors.primary} />
-                  </TouchableOpacity>
-                </View>
-
-                <Text style={styles.sheetLabel}>Enter store handle</Text>
-                <View style={styles.handlePreviewRow}>
-                  <Text style={styles.handlePreviewDomain}>Getameal.app/ </Text>
-                  <TextInput
-                    style={styles.handlePreviewInput}
-                    value={tempValue}
-                    onChangeText={(t) => {
-                      setTempValue(t);
-                      setHandleError("");
-                    }}
-                    autoFocus
-                    autoCapitalize="none"
-                    autoCorrect={false}
-                    returnKeyType="done"
-                    onSubmitEditing={handleSave}
-                    placeholderTextColor={Colors.textPlaceholder}
-                  />
-                </View>
-                {handleError ? (
-                  <Text style={styles.handleError}>{handleError}</Text>
-                ) : null}
-
-                <Button
-                  title="Save"
-                  onPress={handleSave}
-                  variant={tempValue ? "primary" : "secondary"}
-                  fullWidth
-                  style={{ marginTop: handleError ? 12 : 0 }}
-                />
-              </View>
-            </KeyboardAvoidingView>
-          </View>
-        </TouchableWithoutFeedback>
-      </Modal>
-
-      {/* ── Phone Number Modal ── */}
-      <Modal visible={activeModal === "phoneNumber"} transparent animationType="slide" statusBarTranslucent>
-        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-          <View style={styles.modalBackdrop}>
-            <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"}>
-              <View style={[styles.sheet, { paddingBottom: Math.max(24, insets.bottom + 16) }]}>
-                <View style={styles.sheetHeader}>
-                  <Text style={styles.sheetTitle}>Add your phone number</Text>
-                  <TouchableOpacity onPress={closeModal}>
-                    <Ionicons name="close" size={24} color={Colors.primary} />
-                  </TouchableOpacity>
-                </View>
-
-                <Text style={styles.sheetLabel}>Enter phone number</Text>
-                <TextInput
-                  style={styles.sheetInput}
-                  value={tempValue}
-                  onChangeText={setTempValue}
-                  autoFocus
-                  keyboardType="phone-pad"
-                  textAlign="center"
-                  returnKeyType="done"
-                  onSubmitEditing={handleSave}
-                  placeholderTextColor={Colors.textPlaceholder}
-                />
-
-                <Button
-                  title="Save"
-                  onPress={handleSave}
-                  variant={tempValue ? "primary" : "secondary"}
-                  fullWidth
-                />
-              </View>
-            </KeyboardAvoidingView>
-          </View>
-        </TouchableWithoutFeedback>
-      </Modal>
+      <FieldModal
+        visible={activeModal === "phoneNumber"}
+        title="Add your phone number"
+        label="Enter phone number"
+        placeholder="Enter your phone number"
+        keyboardType="phone-pad"
+        inputFontSize={36}
+        value={tempValue}
+        onChangeText={setTempValue}
+        onSave={handleSave}
+        onClose={closeModal}
+      />
     </ImageBackground>
   );
 }
@@ -340,62 +279,68 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   stepPill: {
-    backgroundColor: Colors.backgroundMuted,
-    borderRadius: 20,
-    paddingHorizontal: 16,
-    paddingVertical: 6,
+    width: 110,
+    height: 38,
+    borderRadius: 50,
+    borderWidth: 1,
+    borderColor: "#EDEDED",
+    backgroundColor: "#F7F7F7",
+    alignItems: "center",
+    justifyContent: "center",
   },
   stepText: {
-    fontSize: 13,
+    fontSize: 14,
     fontWeight: "600",
     color: Colors.primary,
   },
+  gradientBg: {
+    flex: 1,
+  },
   scroll: {
     paddingHorizontal: 24,
-    paddingTop: 8,
+    paddingTop: 20,
   },
   title: {
-    fontSize: 26,
+    fontSize: 22,
     fontWeight: "700",
     color: Colors.primary,
     marginBottom: 6,
+    textAlign: "center",
   },
   subtitle: {
     fontSize: 14,
-    color: Colors.gray700,
-    marginBottom: 24,
+    color: "#797979",
+    textAlign: "center",
   },
   illustrationWrap: {
     alignItems: "center",
     justifyContent: "center",
-    height: 180,
+    height: 261,
     marginBottom: 32,
+    marginTop: 50,
+  },
+  illustration: {
+    width: "100%",
+    height: "100%",
   },
   rows: {
-    backgroundColor: Colors.background,
     borderRadius: 16,
-    borderWidth: 1,
-    borderColor: Colors.border,
-    marginBottom: 24,
+    marginBottom: 40,
     overflow: "hidden",
   },
   row: {
     flexDirection: "row",
     alignItems: "center",
-    paddingHorizontal: 16,
-    paddingVertical: 16,
-    gap: 12,
+    paddingVertical: 10,
+    gap: 16,
   },
-  rowDivider: {
-    height: 1,
-    backgroundColor: Colors.border,
-    marginHorizontal: 16,
-  },
+
   rowIconWrap: {
-    width: 36,
-    height: 36,
+    width: 56,
+    height: 56,
     borderRadius: 10,
-    backgroundColor: Colors.backgroundMuted,
+    padding: 5,
+    backgroundColor: "#F7F7F7",
     justifyContent: "center",
     alignItems: "center",
   },
@@ -403,77 +348,17 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   rowLabel: {
-    fontSize: 15,
+    fontSize: 16,
     fontWeight: "600",
     color: Colors.primary,
-    marginBottom: 2,
+    marginBottom: 6,
   },
   rowValue: {
-    fontSize: 13,
-    color: Colors.gray700,
+    fontSize: 14,
+    color: "#989898",
   },
   rowPlaceholder: {
     fontSize: 13,
     color: Colors.textPlaceholder,
-  },
-  // Modal / bottom sheet
-  modalBackdrop: {
-    flex: 1,
-    backgroundColor: "rgba(0,0,0,0.35)",
-    justifyContent: "flex-end",
-  },
-  sheet: {
-    backgroundColor: Colors.background,
-    borderTopLeftRadius: 24,
-    borderTopRightRadius: 24,
-    paddingHorizontal: 24,
-    paddingTop: 24,
-    gap: 16,
-  },
-  sheetHeader: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-  },
-  sheetTitle: {
-    fontSize: 16,
-    fontWeight: "700",
-    color: Colors.primary,
-  },
-  sheetLabel: {
-    fontSize: 13,
-    color: Colors.gray700,
-    textAlign: "center",
-  },
-  sheetInput: {
-    fontSize: 28,
-    fontWeight: "700",
-    color: Colors.primary,
-    paddingVertical: 8,
-    minHeight: 60,
-  },
-  handlePreviewRow: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
-    minHeight: 60,
-  },
-  handlePreviewDomain: {
-    fontSize: 28,
-    fontWeight: "700",
-    color: Colors.primary,
-  },
-  handlePreviewInput: {
-    fontSize: 28,
-    fontWeight: "700",
-    color: Colors.primary,
-    flex: 1,
-    paddingVertical: 8,
-  },
-  handleError: {
-    fontSize: 13,
-    color: Colors.error,
-    textAlign: "center",
-    marginTop: -8,
   },
 });
