@@ -40,5 +40,22 @@ export const Colors = {
     glowRed: '#FD1E1E',
     glowOrange: '#FFA600',
     glowGreen: '#00A45E',
+
+    // Gradient overlays
+    gradientOverlayStart: 'rgba(29,29,29,0)',
+    gradientOverlayEnd: 'rgba(0,0,0,0.80)',
+
+    // Avatar badge colors
+    avatarGreen: '#4CAF50',
+    avatarBlue: '#2196F3',
+    avatarOrange: '#FF9800',
+    avatarPink: '#E91E63',
+    avatarPurple: '#9C27B0',
+    avatarDeepOrange: '#FF5722',
+    avatarCyan: '#00BCD4',
+    avatarLightGreen: '#8BC34A',
+    avatarRed: '#F44336',
+    avatarIndigo: '#3F51B5',
+    avatarTeal: '#009688',
   };
   

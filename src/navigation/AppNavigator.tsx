@@ -6,6 +6,8 @@ import SplashTwo from '@/screens/welcomeviews/SplashTwo';
 import HomeScreen from '@/screens/HomeScreen';
 import Register from '@/screens/auth/Register';
 import ConfirmEmailScreen from '@/screens/auth/ConfirmEmailScreen';
+import Cover from '@/screens/onboarding/Cover';
+import CreateStore from '@/screens/onboarding/CreateStore';
 import EnterName from '@/screens/onboarding/EnterName';
 import SetLocation from '@/screens/onboarding/SetLocation';
 import GetNotified from '@/screens/onboarding/GetNotified';
@@ -18,6 +20,8 @@ export type RootStackParamList = {
   SplashTwo: undefined;
   Register: undefined;
   ConfirmEmail: { email: string, isLogin: Boolean };
+  Cover: undefined;
+  CreateStore: undefined;
   EnterName: undefined;
   SetLocation: undefined;
   GetNotified: undefined;
@@ -42,6 +46,8 @@ export default function AppNavigator() {
       <Stack.Screen name="SplashTwo" component={SplashTwo} />
       <Stack.Screen name="Register" component={Register} />
       <Stack.Screen name="ConfirmEmail" component={ConfirmEmailScreen} />
+      <Stack.Screen name="Cover" component={Cover} />
+      <Stack.Screen name="CreateStore" component={CreateStore} />
       <Stack.Screen name="EnterName" component={EnterName} />
       <Stack.Screen name="SetLocation" component={SetLocation} />
       <Stack.Screen name="GetNotified" component={GetNotified} />
