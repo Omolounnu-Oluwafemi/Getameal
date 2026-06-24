@@ -68,7 +68,7 @@ export default function ConfirmEmailScreen({
           setIsVerifying(false);
           islogin
             ? navigation.navigate("Home")
-            : navigation.navigate("EnterName");
+            : navigation.navigate("Cover");
         }, 500);
       } else {
         // Error
