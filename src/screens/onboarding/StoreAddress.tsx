@@ -1,9 +1,10 @@
-import ChefsIllustration from "@/assets/onboarding/2Chefs.svg";
-import StoreIcon from "@/assets/onboarding/clarity_store-line.svg";
-import LinkIcon from "@/assets/onboarding/si_link-duotone.svg";
-import PhoneIcon from "@/assets/onboarding/solar_phone-linear.svg";
+import GuestHouseIcon from "@/assets/onboarding/hugeicons_guest-house.svg";
+import DeliveryIcon from "@/assets/onboarding/iconoir_delivery.svg";
+import LocationIcon from "@/assets/onboarding/proicons_location.svg";
 import Button from "@/components/Button";
 import FieldModal from "@/components/FieldModal";
+import FullAddressModal from "@/components/FullAddressModal";
+import LocationSelectionModal from "@/components/Locationselectionmodal";
 import { RootStackParamList } from "@/navigation/AppNavigator";
 import { Colors } from "@/screens/constants/colors";
 import Ionicons from "@expo/vector-icons/Ionicons";
@@ -12,6 +13,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import React, { useState } from "react";
 import {
   Dimensions,
+  Image,
   ImageBackground,
   ScrollView,
   StatusBar,
@@ -27,54 +29,28 @@ import {
 
 const { width, height } = Dimensions.get("window");
 
-type CreateStoreProps = {
-  navigation: NativeStackNavigationProp<RootStackParamList, "CreateStore">;
+type StoreAddressProps = {
+  navigation: NativeStackNavigationProp<RootStackParamList, "StoreAddress">;
 };
 
-type ActiveModal = "storeName" | "storeHandle" | "phoneNumber" | null;
-
-export default function CreateStore({ navigation }: CreateStoreProps) {
+export default function StoreAddress({ navigation }: StoreAddressProps) {
   const insets = useSafeAreaInsets();
 
-  const [storeName, setStoreName] = useState("");
-  const [storeHandle, setStoreHandle] = useState("");
-  const [phoneNumber, setPhoneNumber] = useState("");
+  const [city, setCity] = useState("");
+  const [fullAddress, setFullAddress] = useState("");
+  const [pickupLandmark, setPickupLandmark] = useState("");
 
-  const [activeModal, setActiveModal] = useState<ActiveModal>(null);
-  const [tempValue, setTempValue] = useState("");
-  const [handleError, setHandleError] = useState("");
+  const [showCityModal, setShowCityModal] = useState(false);
+  const [showAddressModal, setShowAddressModal] = useState(false);
+  const [showLandmarkModal, setShowLandmarkModal] = useState(false);
+  const [tempLandmark, setTempLandmark] = useState("");
 
-  const isComplete = !!storeName && !!storeHandle && !!phoneNumber;
+  const isComplete = !!city && !!fullAddress && !!pickupLandmark;
+  const anyModalOpen = showCityModal || showAddressModal || showLandmarkModal;
 
-  const openModal = (field: ActiveModal) => {
-    setHandleError("");
-    if (field === "storeName") setTempValue(storeName);
-    else if (field === "storeHandle") setTempValue(storeHandle);
-    else if (field === "phoneNumber") setTempValue(phoneNumber);
-    setActiveModal(field);
-  };
-
-  const closeModal = () => {
-    setActiveModal(null);
-    setHandleError("");
-  };
-
-  const handleSave = () => {
-    if (activeModal === "storeName") {
-      setStoreName(tempValue.trim());
-      closeModal();
-    } else if (activeModal === "storeHandle") {
-      // Availability check (replace with real API call)
-      if (tempValue.toLowerCase() === "kings") {
-        setHandleError("Store link is taken");
-        return;
-      }
-      setStoreHandle(tempValue.trim());
-      closeModal();
-    } else if (activeModal === "phoneNumber") {
-      setPhoneNumber(tempValue.trim());
-      closeModal();
-    }
+  const handleCitySelect = (location: string, state: string) => {
+    setCity(location === state ? state : `${location}, ${state}`);
+    setShowCityModal(false);
   };
 
   return (
@@ -85,7 +61,7 @@ export default function CreateStore({ navigation }: CreateStoreProps) {
     >
       <SafeAreaView edges={["top"]} style={styles.container}>
         <StatusBar
-          barStyle={activeModal ? "light-content" : "dark-content"}
+          barStyle={anyModalOpen ? "light-content" : "dark-content"}
           translucent
           backgroundColor="transparent"
         />
@@ -99,7 +75,7 @@ export default function CreateStore({ navigation }: CreateStoreProps) {
             <Ionicons name="chevron-back" size={24} color={Colors.primary} />
           </TouchableOpacity>
           <View style={styles.stepPill}>
-            <Text style={styles.stepText}>Step 1 of 5</Text>
+            <Text style={styles.stepText}>Step 2 of 5</Text>
           </View>
           <View style={styles.backBtn} />
         </View>
@@ -116,33 +92,34 @@ export default function CreateStore({ navigation }: CreateStoreProps) {
             ]}
             showsVerticalScrollIndicator={false}
           >
-            <Text style={styles.title}>Create your store.</Text>
-            <Text style={styles.subtitle}>Takes less than 2 mins</Text>
+            <Text style={styles.title}>Where are you based?</Text>
 
             <View style={styles.illustrationWrap}>
-              <ChefsIllustration width="100%" height="100%" />
+              <Image
+                source={require("@/assets/onboarding/Kitchen.png")}
+                style={styles.illustration}
+                resizeMode="contain"
+              />
             </View>
 
             {/* Form rows */}
             <View style={styles.rows}>
               <TouchableOpacity
                 style={styles.row}
-                onPress={() => openModal("storeName")}
+                onPress={() => setShowCityModal(true)}
                 activeOpacity={0.7}
               >
                 <View style={styles.rowIconWrap}>
-                  {storeName ? (
-                    <StoreIcon width={22} height={22} />
+                  {city ? (
+                    <LocationIcon width={22} height={22} />
                   ) : (
                     <Ionicons name="add" size={22} color={Colors.primary} />
                   )}
                 </View>
                 <View style={styles.rowContent}>
-                  <Text style={styles.rowLabel}>Store name</Text>
-                  <Text
-                    style={storeName ? styles.rowValue : styles.rowPlaceholder}
-                  >
-                    {storeName || "Example: Amaka's Kitchen"}
+                  <Text style={styles.rowLabel}>City</Text>
+                  <Text style={city ? styles.rowValue : styles.rowPlaceholder}>
+                    {city || "Example: Lagos"}
                   </Text>
                 </View>
                 <Ionicons name="chevron-forward" size={18} color="#989898" />
@@ -150,26 +127,24 @@ export default function CreateStore({ navigation }: CreateStoreProps) {
 
               <TouchableOpacity
                 style={styles.row}
-                onPress={() => openModal("storeHandle")}
+                onPress={() => setShowAddressModal(true)}
                 activeOpacity={0.7}
               >
                 <View style={styles.rowIconWrap}>
-                  {storeHandle ? (
-                    <LinkIcon width={22} height={22} />
+                  {fullAddress ? (
+                    <GuestHouseIcon width={22} height={22} />
                   ) : (
                     <Ionicons name="add" size={22} color={Colors.primary} />
                   )}
                 </View>
                 <View style={styles.rowContent}>
-                  <Text style={styles.rowLabel}>Store handle</Text>
+                  <Text style={styles.rowLabel}>Full address</Text>
                   <Text
                     style={
-                      storeHandle ? styles.rowValue : styles.rowPlaceholder
+                      fullAddress ? styles.rowValue : styles.rowPlaceholder
                     }
                   >
-                    {storeHandle
-                      ? `getameal.com/${storeHandle}`
-                      : "Example: getameal.com/amaka-kitchen"}
+                    {fullAddress || "Example: 123 Admiralty way lekki"}
                   </Text>
                 </View>
                 <Ionicons name="chevron-forward" size={18} color="#989898" />
@@ -177,24 +152,27 @@ export default function CreateStore({ navigation }: CreateStoreProps) {
 
               <TouchableOpacity
                 style={styles.row}
-                onPress={() => openModal("phoneNumber")}
+                onPress={() => {
+                  setTempLandmark(pickupLandmark);
+                  setShowLandmarkModal(true);
+                }}
                 activeOpacity={0.7}
               >
                 <View style={styles.rowIconWrap}>
-                  {phoneNumber ? (
-                    <PhoneIcon width={22} height={22} />
+                  {pickupLandmark ? (
+                    <DeliveryIcon width={22} height={22} />
                   ) : (
                     <Ionicons name="add" size={22} color={Colors.primary} />
                   )}
                 </View>
                 <View style={styles.rowContent}>
-                  <Text style={styles.rowLabel}>Phone number</Text>
+                  <Text style={styles.rowLabel}>Pickup landmark</Text>
                   <Text
                     style={
-                      phoneNumber ? styles.rowValue : styles.rowPlaceholder
+                      pickupLandmark ? styles.rowValue : styles.rowPlaceholder
                     }
                   >
-                    {phoneNumber || "Example: 080123456789"}
+                    {pickupLandmark || "Example: Sabo, Yaba"}
                   </Text>
                 </View>
                 <Ionicons name="chevron-forward" size={18} color="#989898" />
@@ -205,7 +183,7 @@ export default function CreateStore({ navigation }: CreateStoreProps) {
               title="Continue"
               onPress={() => {
                 if (!isComplete) return;
-                navigation.navigate("StoreAddress");
+                navigation.navigate("CookingExperience");
               }}
               variant={isComplete ? "primary" : "secondary"}
               fullWidth
@@ -214,44 +192,35 @@ export default function CreateStore({ navigation }: CreateStoreProps) {
         </LinearGradient>
       </SafeAreaView>
 
-      <FieldModal
-        visible={activeModal === "storeName"}
-        title="Add your store name"
-        label="Enter store name"
-        placeholder="Enter your store name"
-        value={tempValue}
-        onChangeText={setTempValue}
-        onSave={handleSave}
-        onClose={closeModal}
+      <LocationSelectionModal
+        visible={showCityModal}
+        onClose={() => setShowCityModal(false)}
+        onSelectLocation={handleCitySelect}
       />
 
-      <FieldModal
-        visible={activeModal === "storeHandle"}
-        title="Add your store handle"
-        label="Enter store handle"
-        prefix="Getameal.app/ "
-        placeholder="Store handle"
-        value={tempValue}
-        onChangeText={(t) => {
-          setTempValue(t);
-          setHandleError("");
+      <FullAddressModal
+        visible={showAddressModal}
+        onClose={() => setShowAddressModal(false)}
+        onSelectAddress={(address) => {
+          setFullAddress(address);
+          setShowAddressModal(false);
         }}
-        onSave={handleSave}
-        onClose={closeModal}
-        error={handleError}
       />
 
       <FieldModal
-        visible={activeModal === "phoneNumber"}
-        title="Add your phone number"
-        label="Enter phone number"
-        placeholder="Enter your phone number"
-        keyboardType="phone-pad"
-        inputFontSize={36}
-        value={tempValue}
-        onChangeText={setTempValue}
-        onSave={handleSave}
-        onClose={closeModal}
+        visible={showLandmarkModal}
+        title="Pickup landmark"
+        label="Pickup landmark"
+        placeholder="Example: Mega chicken ikate"
+        placeholderStyle={{ fontWeight: "600", fontSize: 20, color: "#C3C3C3" }}
+        inputStyle={{ fontWeight: "600", fontSize: 20, color: "#222222" }}
+        value={tempLandmark}
+        onChangeText={setTempLandmark}
+        onSave={() => {
+          setPickupLandmark(tempLandmark.trim());
+          setShowLandmarkModal(false);
+        }}
+        onClose={() => setShowLandmarkModal(false)}
       />
     </ImageBackground>
   );
@@ -307,21 +276,12 @@ const styles = StyleSheet.create({
     marginBottom: 6,
     textAlign: "center",
   },
-  subtitle: {
-    fontSize: 14,
-    color: "#797979",
-    textAlign: "center",
-  },
   illustrationWrap: {
     alignItems: "center",
     justifyContent: "center",
     height: 261,
     marginBottom: 32,
     marginTop: 50,
-  },
-  illustration: {
-    width: "100%",
-    height: "100%",
   },
   rows: {
     borderRadius: 16,
@@ -334,7 +294,6 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     gap: 16,
   },
-
   rowIconWrap: {
     width: 56,
     height: 56,
@@ -360,5 +319,9 @@ const styles = StyleSheet.create({
   rowPlaceholder: {
     fontSize: 13,
     color: Colors.textPlaceholder,
+  },
+  illustration: {
+    width: "100%",
+    height: "100%",
   },
 });

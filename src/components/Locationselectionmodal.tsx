@@ -1,16 +1,16 @@
-import React, { useState, useEffect } from "react";
+import { Feather, Ionicons } from "@expo/vector-icons";
+import * as nigerianStates from "nigerian-states-and-lgas";
+import React, { useState } from "react";
 import {
   Modal,
-  View,
-  TouchableOpacity,
   ScrollView,
-  StyleSheet,
-  TextInput,
-  Text,
   StatusBar,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
 } from "react-native";
-import { Ionicons, Feather } from '@expo/vector-icons';
-import * as nigerianStates from 'nigerian-states-and-lgas';
 
 interface LocationSelectionModalProps {
   visible: boolean;
@@ -42,18 +42,18 @@ const LocationSelectionModal: React.FC<LocationSelectionModalProps> = ({
   // Filter locations based on search
   const getFilteredLocations = () => {
     if (!searchQuery) return allStates;
-    
+
     return allStates.filter((state) =>
-      state.toLowerCase().includes(searchQuery.toLowerCase())
+      state.toLowerCase().includes(searchQuery.toLowerCase()),
     );
   };
 
   const handleLocationSelect = (location: string) => {
     setSelectedState(location);
-    
+
     // Get LGAs for the selected state
-      const lgas = nigerianStates.lgas(location);
-      setStateAreas(lgas || []);
+    const lgas = nigerianStates.lgas(location);
+    setStateAreas(lgas || []);
   };
 
   const handleAreaSelect = (area: string) => {
@@ -90,7 +90,11 @@ const LocationSelectionModal: React.FC<LocationSelectionModalProps> = ({
       onRequestClose={onClose}
       transparent={true}
     >
-      <StatusBar barStyle="light-content" translucent backgroundColor="transparent" />
+      <StatusBar
+        barStyle="light-content"
+        translucent
+        backgroundColor="transparent"
+      />
       <View style={styles.modalOverlay}>
         <View style={styles.offshoot}></View>
         <View style={styles.modalContent}>
@@ -111,13 +115,20 @@ const LocationSelectionModal: React.FC<LocationSelectionModalProps> = ({
 
           <View style={styles.content}>
             {/* Search Input */}
-            <View style={[
-              styles.searchContainer,
-              isSearchFocused && styles.searchContainerFocused
-            ]}>
+            <View
+              style={[
+                styles.searchContainer,
+                isSearchFocused && styles.searchContainerFocused,
+              ]}
+            >
+              <Ionicons
+                name="search"
+                size={15.972999572753906}
+                color="#989898"
+              />
               <TextInput
                 style={styles.searchInput}
-                placeholder="Enter location"
+                placeholder="Search locations"
                 placeholderTextColor="#989898"
                 value={searchQuery}
                 onChangeText={setSearchQuery}
@@ -125,12 +136,11 @@ const LocationSelectionModal: React.FC<LocationSelectionModalProps> = ({
                 onFocus={() => setIsSearchFocused(true)}
                 onBlur={() => setIsSearchFocused(false)}
               />
-              
-              {searchQuery.length < 1 && (
-                <Ionicons name="search" size={24} color="#989898" style={styles.searchIcon} />
-              )}
               {searchQuery.length > 0 && (
-                <TouchableOpacity onPress={handleClearSearch} style={styles.clearIcon}>
+                <TouchableOpacity
+                  onPress={handleClearSearch}
+                  style={styles.clearIcon}
+                >
                   <Feather name="x" size={15} color="black" />
                 </TouchableOpacity>
               )}
@@ -153,12 +163,17 @@ const LocationSelectionModal: React.FC<LocationSelectionModalProps> = ({
                         key={area}
                         style={[
                           styles.locationItem,
-                          index === stateAreas.length - 1 && styles.locationItemLast
+                          index === stateAreas.length - 1 &&
+                            styles.locationItemLast,
                         ]}
                         onPress={() => handleAreaSelect(area)}
                       >
                         <Text style={styles.locationText}>{area}</Text>
-                        <Ionicons name="chevron-forward" size={18} color="#989898" />
+                        <Ionicons
+                          name="chevron-forward"
+                          size={18}
+                          color="#989898"
+                        />
                       </TouchableOpacity>
                     ))}
                   </View>
@@ -175,12 +190,17 @@ const LocationSelectionModal: React.FC<LocationSelectionModalProps> = ({
                           key={location}
                           style={[
                             styles.locationItem,
-                            index === filteredLocations.length - 1 && styles.locationItemLast
+                            index === filteredLocations.length - 1 &&
+                              styles.locationItemLast,
                           ]}
                           onPress={() => handleLocationSelect(location)}
                         >
                           <Text style={styles.locationText}>{location}</Text>
-                          <Ionicons name="chevron-forward" size={18} color="#989898" />
+                          <Ionicons
+                            name="chevron-forward"
+                            size={18}
+                            color="#989898"
+                          />
                         </TouchableOpacity>
                       ))}
                     </View>
@@ -192,44 +212,54 @@ const LocationSelectionModal: React.FC<LocationSelectionModalProps> = ({
                 // Show popular and all locations
                 <>
                   <Text style={styles.sectionTitle}>Popular location</Text>
-                  <View style={styles.spacer12} />
+                  <View style={styles.spacer20} />
                   <View style={styles.sectionContainer}>
                     {popularLocations.map((location, index) => (
                       <TouchableOpacity
                         key={location}
                         style={[
                           styles.locationItem,
-                          index === popularLocations.length - 1 && styles.locationItemLast
+                          index === popularLocations.length - 1 &&
+                            styles.locationItemLast,
                         ]}
                         onPress={() => handleLocationSelect(location)}
                       >
                         <Text style={styles.locationText}>{location}</Text>
-                        <Ionicons name="chevron-forward" size={18} color="#989898" />
+                        <Ionicons
+                          name="chevron-forward"
+                          size={18}
+                          color="#989898"
+                        />
                       </TouchableOpacity>
                     ))}
                   </View>
 
-                  <View style={styles.spacer32} />
+                  <View style={styles.spacer20} />
 
                   <Text style={styles.sectionTitle}>All locations</Text>
-                  <View style={styles.spacer12} />
+                  <View style={styles.spacer20} />
                   <View style={styles.sectionContainer}>
                     {allStates.map((state, index) => (
                       <TouchableOpacity
                         key={state}
                         style={[
                           styles.locationItem,
-                          index === allStates.length - 1 && styles.locationItemLast
+                          index === allStates.length - 1 &&
+                            styles.locationItemLast,
                         ]}
                         onPress={() => handleLocationSelect(state)}
                       >
                         <Text style={styles.locationText}>{state}</Text>
-                        <Ionicons name="chevron-forward" size={18} color="#989898" />
+                        <Ionicons
+                          name="chevron-forward"
+                          size={18}
+                          color="#989898"
+                        />
                       </TouchableOpacity>
                     ))}
                   </View>
                 </>
-              )}  
+              )}
             </ScrollView>
           </View>
         </View>
@@ -242,25 +272,25 @@ export default LocationSelectionModal;
 
 const styles = StyleSheet.create({
   offshoot: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: "#FFFFFF",
     padding: 12,
-    width: '92%',
-    alignSelf: 'center',
+    width: "92%",
+    alignSelf: "center",
     borderTopLeftRadius: 16,
     borderTopRightRadius: 16,
     marginBottom: -5,
   },
   modalOverlay: {
     flex: 1,
-    justifyContent: 'flex-end',
-    backgroundColor: 'rgba(0, 0, 0, 0.91)',
+    justifyContent: "flex-end",
+    backgroundColor: "rgba(0, 0, 0, 0.91)",
   },
   modalContent: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: "#FFFFFF",
     borderTopLeftRadius: 24,
     borderTopRightRadius: 24,
-    height: '91%',
-    shadowColor: '#000',
+    height: "91%",
+    shadowColor: "#000",
     shadowOffset: {
       width: 0,
       height: -4,
@@ -307,20 +337,26 @@ const styles = StyleSheet.create({
   searchContainer: {
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: "#F7F7F7",
+    backgroundColor: "#FFFFFF",
     borderRadius: 50,
-    paddingHorizontal: 16,
-    paddingVertical: 18,
+    height: 60,
+    paddingTop: 5,
+    paddingBottom: 5,
+    paddingLeft: 20,
+    paddingRight: 5,
+    gap: 10,
     borderWidth: 1,
-    borderColor: "#E1E1E1",
+    borderColor: "#EDEDED",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.05,
+    shadowRadius: 25,
+    elevation: 3,
   },
   searchContainerFocused: {
-    borderColor: "#025EFC",
+    borderColor: "#209D01",
   },
-  searchIcon: {
-    fontSize: 18,
-    marginRight: 8,
-  },
+  searchIcon: {},
   searchInput: {
     flex: 1,
     fontSize: 16,
@@ -339,8 +375,8 @@ const styles = StyleSheet.create({
   spacer24: {
     height: 24,
   },
-  spacer32: {
-    height: 32,
+  spacer20: {
+    height: 20,
   },
   scrollView: {
     flex: 1,
@@ -353,9 +389,14 @@ const styles = StyleSheet.create({
   },
   sectionContainer: {
     borderWidth: 1,
-    borderColor: '#E1E1E1',
-    borderRadius: 12,
-    overflow: 'hidden',
+    borderColor: "#EDEDED",
+    borderRadius: 20,
+    backgroundColor: "#fff",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.05,
+    shadowRadius: 25,
+    elevation: 2,
   },
   locationItem: {
     flexDirection: "row",
@@ -363,8 +404,6 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     paddingVertical: 16,
     paddingHorizontal: 16,
-    borderBottomWidth: 1,
-    borderBottomColor: '#E1E1E1',
   },
   locationItemLast: {
     borderBottomWidth: 0,

@@ -28,6 +28,8 @@ export type FieldModalProps = {
   onSave: () => void;
   onClose: () => void;
   placeholder?: string;
+  placeholderStyle?: object;
+  inputStyle?: object;
   keyboardType?: "default" | "phone-pad";
   prefix?: string;
   error?: string;
@@ -43,6 +45,8 @@ export default function FieldModal({
   onSave,
   onClose,
   placeholder,
+  placeholderStyle,
+  inputStyle,
   keyboardType = "default",
   prefix,
   error,
@@ -109,13 +113,13 @@ export default function FieldModal({
             ) : (
               <View style={styles.plainInputWrap}>
                 {!value && (
-                  <Text style={styles.plainPlaceholder} pointerEvents="none">
+                  <Text style={[styles.plainPlaceholder, placeholderStyle]} pointerEvents="none">
                     {placeholder}
                   </Text>
                 )}
                 <TextInput
                   ref={inputRef}
-                  style={[styles.input, { fontSize: inputFontSize }]}
+                  style={[styles.input, { fontSize: inputFontSize }, inputStyle]}
                   value={value}
                   onChangeText={onChangeText}
                   keyboardType={keyboardType}
