@@ -61,7 +61,7 @@ export default function CookingExperience({
         </View>
 
         <LinearGradient
-          colors={["rgba(255, 255, 255, 0)", "#ffffff"]}
+          colors={[Colors.whiteTransparent, Colors.background]}
           locations={[0, 0.7]}
           style={styles.gradientBg}
         >
@@ -109,7 +109,7 @@ export default function CookingExperience({
               variant="primary"
               fullWidth
               style={{
-                shadowColor: "#000",
+                shadowColor: Colors.textPrimary,
                 shadowOffset: { width: 0, height: 5 },
                 shadowOpacity: 0.14,
                 shadowRadius: 20,
@@ -149,8 +149,8 @@ const styles = StyleSheet.create({
     height: 38,
     borderRadius: 50,
     borderWidth: 1,
-    borderColor: "#EDEDED",
-    backgroundColor: "#F7F7F7",
+    borderColor: Colors.backgroundBorder,
+    backgroundColor: Colors.backgroundMuted,
     alignItems: "center",
     justifyContent: "center",
   },
@@ -187,9 +187,9 @@ const styles = StyleSheet.create({
     width: 50.83333206176758,
     height: 50.83333206176758,
     borderRadius: 24,
-    backgroundColor: "#F7F7F7",
+    backgroundColor: Colors.backgroundMuted,
     borderWidth: 1,
-    borderColor: "#EDEDED",
+    borderColor: Colors.backgroundBorder,
     alignItems: "center",
     justifyContent: "center",
   },
@@ -203,7 +203,7 @@ const styles = StyleSheet.create({
   yearsLabel: {
     fontSize: 14,
     fontWeight: "600",
-    color: "#000000",
+    color: Colors.textPrimary,
     letterSpacing: 2,
     marginTop: 5,
   },

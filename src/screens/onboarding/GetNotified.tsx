@@ -5,14 +5,15 @@ import {
   View,
   StatusBar,
   Dimensions,
-  ImageBackground
+  ImageBackground,
+  Image,
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '@/navigation/AppNavigator';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Button from '@/components/Button';
-import NotifiedIcon from '@/assets/NotifiedIcon.svg';
+import { Colors } from '@/screens/constants/colors';
 
 const { width, height } = Dimensions.get('window');
 
@@ -36,13 +37,15 @@ export default function GetNotified({ navigation }: GetNotifiedProps) {
 
         {/* Gradient container with content */}
         <LinearGradient
-          colors={['rgba(255, 255, 255, 0.14)', 'rgb(255, 255, 255)', 'rgba(255, 255, 255, 1)']}
+          colors={[Colors.whiteSubtle, Colors.background, Colors.background]}
           style={styles.gradient}
           locations={[0, 0.1, 0.4]}
         >
           <View style={styles.contentWrapper}>
-            <NotifiedIcon
-              style={styles.logo}
+            <Image
+              source={require('@/assets/NotifiedIcon.png')}
+              style={[styles.logo, { width: 249, height: 287 }]}
+              resizeMode="contain"
             />
             <Text style={styles.title}>Stay in the loop</Text>
             <Text style={styles.subtitle}>
@@ -58,14 +61,14 @@ export default function GetNotified({ navigation }: GetNotifiedProps) {
                         onPress={() => navigation.navigate('Home')}
                         variant="primary"
                         size='large'
-                        style={{ backgroundColor: '#1B8601', marginBottom: 10 }}
+                        style={{ backgroundColor: Colors.brandGreen, marginBottom: 10 }}
                     />
                     <Button
                         title="Don't Allow"
                         onPress={() => navigation.navigate('Home')}
                         variant="secondary"
                         size='large'
-                        style={{ backgroundColor: '#F7F7F7' }}
+                        style={{ backgroundColor: Colors.backgroundMuted }}
                     />
                 </View>
             </View>
@@ -103,12 +106,12 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     fontWeight: '700',
-    color: '#000000', 
+    color: Colors.textPrimary, 
     marginBottom: 12,
   },
   subtitle: {
     fontSize: 16,
-    color: '#5C5C5C',
+    color: Colors.gray700,
     lineHeight: 22,
   },
   contentCard: {
@@ -123,7 +126,7 @@ const styles = StyleSheet.create({
     textAlign: 'left',
     fontSize: 14,
     fontWeight: '400',
-    color: '#989898',
+    color: Colors.textPlaceholder,
     marginTop: -10,
     marginBottom: 30,
     paddingLeft: 15,

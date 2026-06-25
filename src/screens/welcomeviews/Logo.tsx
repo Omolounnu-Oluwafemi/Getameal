@@ -2,6 +2,7 @@ import LogoGreen from "@/assets/icons/LogoGreen";
 import { RootStackParamList } from "@/navigation/AppNavigator";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { Colors } from "@/screens/constants/colors";
 import React, { useEffect } from "react";
 import { Animated, StatusBar, StyleSheet, View } from "react-native";
 
@@ -64,7 +65,7 @@ export default function LogoScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: Colors.background,
     justifyContent: "center",
     alignItems: "center",
   },

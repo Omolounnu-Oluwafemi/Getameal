@@ -15,7 +15,7 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "",
+      "bundleIdentifier": "com.getameal.app",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false
       }
@@ -27,16 +27,23 @@
       },
       "edgeToEdgeEnabled": true,
       "predictiveBackGestureEnabled": false,
-      "package": ""
+      "package": "com.getameal.app"
     },
     "web": {
-      "output": "static",
+      "output": "single",
       "favicon": "./src/assets/icon.png"
     },
-    "plugins": ["expo-video"],
+    "plugins": [
+      "expo-video"
+    ],
     "experiments": {
       "typedRoutes": true,
       "reactCompiler": true
+    },
+    "extra": {
+      "eas": {
+        "projectId": "5dd350da-3d5c-4f32-8fad-da643164f9f0"
+      }
     }
   }
 }

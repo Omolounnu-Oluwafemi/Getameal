@@ -1,4 +1,5 @@
 import GetaMeal from "@/assets/GetaMealWhitebg.svg";
+import { Colors } from "@/screens/constants/colors";
 import { RootStackParamList } from "@/navigation/AppNavigator";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { VideoView, useVideoPlayer } from "expo-video";
@@ -21,7 +22,6 @@ type SplashOneScreenProps = {
 
 export default function SplashOne({ navigation }: SplashOneScreenProps) {
   // const videoSource = require('@/assets/MealVideo.mp4');
-
   const player = useVideoPlayer(videoSource, (player) => {
     player.loop = true;
     player.muted = true;
@@ -33,10 +33,9 @@ export default function SplashOne({ navigation }: SplashOneScreenProps) {
       <StatusBar
         barStyle="light-content"
         translucent
-        backgroundColor="transparent"
+        backgroundColor={Colors.transparent}
       />
 
-      {/* Video Background */}
       <View style={styles.videoContainer}>
         <VideoView
           style={styles.backgroundVideo}
@@ -49,9 +48,7 @@ export default function SplashOne({ navigation }: SplashOneScreenProps) {
           allowsPictureInPicture={false}
         />
 
-        {/* Content overlay on video */}
         <SafeAreaView edges={["top"]} style={styles.imageContent}>
-          {/* Logo at top */}
           <View style={styles.logoContainer}>
             <GetaMeal width={120} height={40} />
           </View>
@@ -60,7 +57,6 @@ export default function SplashOne({ navigation }: SplashOneScreenProps) {
         </SafeAreaView>
       </View>
 
-      {/* Content Card with buttons */}
       <View style={styles.contentCard}>
         <Text style={styles.title}>Fresh meals. Cooked in bulk.</Text>
         <Text style={styles.subtitle}>
@@ -93,7 +89,7 @@ const styles = StyleSheet.create({
     width: width,
     height: height * 0.65,
     position: "relative",
-    backgroundColor: "#000",
+    backgroundColor: Colors.textPrimary,
   },
   posterImage: {
     position: "absolute",
@@ -135,7 +131,7 @@ const styles = StyleSheet.create({
   },
   contentCard: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: Colors.background,
     paddingHorizontal: 24,
     paddingTop: 32,
     paddingBottom: 40,
@@ -146,24 +142,24 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     fontWeight: "700",
-    color: "#000000",
+    color: Colors.textPrimary,
     textAlign: "center",
     marginBottom: 15,
     marginTop: 20,
   },
   subtitle: {
     fontSize: 16,
-    color: "#000000",
+    color: Colors.textPrimary,
     textAlign: "center",
     lineHeight: 22,
     marginBottom: 35,
   },
   registerButton: {
-    backgroundColor: "#1B8601",
+    backgroundColor: Colors.brandGreen,
     paddingVertical: 16,
     borderRadius: 12,
     alignItems: "center",
-    shadowColor: "#000",
+    shadowColor: Colors.textPrimary,
     shadowOffset: { width: 0, height: 5 },
     shadowOpacity: 0.3,
     shadowRadius: 3,
@@ -171,7 +167,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   loginButton: {
-    backgroundColor: "#F7F7F7",
+    backgroundColor: Colors.backgroundMuted,
     paddingVertical: 16,
     borderRadius: 12,
     alignItems: "center",
@@ -179,12 +175,12 @@ const styles = StyleSheet.create({
   registerButtonText: {
     fontSize: 16,
     fontWeight: "600",
-    color: "#fff",
+    color: Colors.background,
   },
   loginText: {
     textAlign: "center",
     fontSize: 16,
     fontWeight: "600",
-    color: "#000",
+    color: Colors.textPrimary,
   },
 });

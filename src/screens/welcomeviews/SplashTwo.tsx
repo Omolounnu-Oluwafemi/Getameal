@@ -44,7 +44,7 @@ export default function SplashTwo({ navigation }: WelcomeScreenProps) {
 
           {/* Alpha Logo and text at bottom of image */}
           <LinearGradient
-            colors={['rgba(255, 255, 255, 0.1)', 'rgba(255, 255, 255, 0.9)', 'rgba(255, 255, 255, 1)']}
+            colors={[Colors.whiteAlpha10, Colors.whiteAlpha90, Colors.background]}
             style={styles.titleContainer}
             locations={[0, 0.5, 1]}
             >
@@ -134,7 +134,7 @@ const styles = StyleSheet.create({
     },
     subtitle: {
       fontSize: 16,
-      color: '#5C5C5C',
+      color: Colors.gray700,
       textAlign: 'center',
       lineHeight: 22,
     },

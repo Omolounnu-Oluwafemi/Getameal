@@ -5,7 +5,8 @@ import {
   View,
   StatusBar,
   Dimensions,
-  ImageBackground
+  ImageBackground,
+  Image,
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
@@ -13,7 +14,7 @@ import { RootStackParamList } from '@/navigation/AppNavigator';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Button from '@/components/Button';
-import LocationImg from '@/assets/EnterLocation.svg';
+import { Colors } from '@/screens/constants/colors';
 import LocationSelectInput from '@/components/LocationSelectInput';
 import LocationSelectionModal from '@/components/Locationselectionmodal';
 import { useDeviceLocation } from '@/utils/hooks/Usedevicelocation';
@@ -68,13 +69,15 @@ export default function SetLocation({ navigation }: SetLocationProps) {
 
         {/* Gradient container with content */}
         <LinearGradient
-          colors={['rgba(255, 255, 255, 0.14)', 'rgb(255, 255, 255)', 'rgba(255, 255, 255, 1)']}
+          colors={[Colors.whiteSubtle, Colors.background, Colors.background]}
           style={styles.gradient}
           locations={[0, 0.1, 0.4]}
         >
           <View style={styles.contentWrapper}>
-            <LocationImg
-              style={styles.logo}
+            <Image
+              source={require('@/assets/EnterLocation.png')}
+              style={[styles.logo, { width: 249, height: 269 }]}
+              resizeMode="contain"
             />
             <Text style={styles.title}>Choose your location</Text>
             <Text style={styles.subtitle}>
@@ -96,14 +99,14 @@ export default function SetLocation({ navigation }: SetLocationProps) {
                         variant="secondary"
                         size='large'
                         icon={<Ionicons name="location-outline" size={24} color="black" />}
-                        style={{ backgroundColor: '#F7F7F7', marginBottom: 10 }}
+                        style={{ backgroundColor: Colors.backgroundMuted, marginBottom: 10 }}
                     />
                     <Button
                         title="Continue"
                         onPress={() => navigation.navigate('GetNotified')}
                         variant="primary"
                         size='large'
-                        style={{ backgroundColor: '#1B8601' }}
+                        style={{ backgroundColor: Colors.brandGreen }}
                     />
                 </View>
             </View>
@@ -145,12 +148,12 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     fontWeight: '700',
-    color: '#000000', 
+    color: Colors.textPrimary, 
     marginBottom: 12,
   },
   subtitle: {
     fontSize: 16,
-    color: '#5C5C5C',
+    color: Colors.gray700,
     lineHeight: 22,
   },
   contentCard: {
@@ -165,7 +168,7 @@ const styles = StyleSheet.create({
     textAlign: 'left',
     fontSize: 14,
     fontWeight: '400',
-    color: '#989898',
+    color: Colors.textPlaceholder,
     marginTop: -10,
     marginBottom: 30,
     paddingLeft: 15,

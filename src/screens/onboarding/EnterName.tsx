@@ -6,6 +6,7 @@ import {
   StatusBar,
   Dimensions,
   ImageBackground,
+  Image,
   KeyboardAvoidingView,
   Platform,
   ScrollView,
@@ -18,7 +19,7 @@ import { RootStackParamList } from '@/navigation/AppNavigator';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import TextInput from '@/components/TextInput';
 import Button from '@/components/Button';
-import EnterNameImg from '@/assets/EnterName.svg';
+import { Colors } from '@/screens/constants/colors';
 
 const { width, height } = Dimensions.get('window');
 
@@ -55,12 +56,16 @@ export default function Register({ navigation }: EnterNameProps) {
 
               {/* Gradient container with content */}
               <LinearGradient
-                colors={['rgba(255, 255, 255, 0.14)', 'rgb(255, 255, 255)', 'rgba(255, 255, 255, 1)']}
+                colors={[Colors.whiteSubtle, Colors.background, Colors.background]}
                 style={styles.gradient}
                 locations={[0, 0.1, 0.4]}
               >
                 <View style={styles.contentWrapper}>
-                  <EnterNameImg style={styles.logo} />
+                  <Image
+                    source={require('@/assets/EnterName.png')}
+                    style={[styles.logo, { width: 249, height: 235 }]}
+                    resizeMode="contain"
+                  />
                   <Text style={styles.title}>Welcome to Getameal</Text>
                   <Text style={styles.subtitle}>
                     Start by telling us your name — it only takes a moment.
@@ -86,7 +91,7 @@ export default function Register({ navigation }: EnterNameProps) {
                       onPress={() => navigation.navigate('SetLocation')}
                       variant="primary"
                       size='large'
-                      style={{ backgroundColor: '#1B8601' }}
+                      style={{ backgroundColor: Colors.brandGreen }}
                     />
                   </View>
                 </View>
@@ -131,12 +136,12 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     fontWeight: '700',
-    color: '#000000', 
+    color: Colors.textPrimary, 
     marginBottom: 12,
   },
   subtitle: {
     fontSize: 16,
-    color: '#5C5C5C',
+    color: Colors.gray700,
     lineHeight: 22,
   },
   contentCard: {
@@ -151,7 +156,7 @@ const styles = StyleSheet.create({
     textAlign: 'left',
     fontSize: 14,
     fontWeight: '400',
-    color: '#989898',
+    color: Colors.textPlaceholder,
     marginTop: -10,
     marginBottom: 30,
     paddingLeft: 15,

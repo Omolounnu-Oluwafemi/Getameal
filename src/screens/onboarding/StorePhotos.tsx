@@ -83,7 +83,7 @@ export default function StorePhotos({ navigation }: StorePhotosProps) {
         </View>
 
         <LinearGradient
-          colors={["rgba(255, 255, 255, 0)", "#ffffff"]}
+          colors={[Colors.whiteTransparent, Colors.background]}
           locations={[0, 0.7]}
           style={styles.gradientBg}
         >
@@ -134,7 +134,7 @@ export default function StorePhotos({ navigation }: StorePhotosProps) {
                     Use a photo customers can trust.
                   </Text>
                 </View>
-                <Ionicons name="chevron-forward" size={18} color="#989898" />
+                <Ionicons name="chevron-forward" size={18} color={Colors.textPlaceholder} />
               </TouchableOpacity>
 
               <TouchableOpacity
@@ -158,7 +158,7 @@ export default function StorePhotos({ navigation }: StorePhotosProps) {
                     Show customers what your food business feels like.
                   </Text>
                 </View>
-                <Ionicons name="chevron-forward" size={18} color="#989898" />
+                <Ionicons name="chevron-forward" size={18} color={Colors.textPlaceholder} />
               </TouchableOpacity>
             </View>
 
@@ -204,8 +204,8 @@ const styles = StyleSheet.create({
     height: 38,
     borderRadius: 50,
     borderWidth: 1,
-    borderColor: "#EDEDED",
-    backgroundColor: "#F7F7F7",
+    borderColor: Colors.backgroundBorder,
+    backgroundColor: Colors.backgroundMuted,
     alignItems: "center",
     justifyContent: "center",
   },
@@ -237,8 +237,8 @@ const styles = StyleSheet.create({
     height: 160,
     borderRadius: 80,
     borderWidth: 3,
-    borderColor: "#FFFFFF",
-    shadowColor: "#000",
+    borderColor: Colors.background,
+    shadowColor: Colors.textPrimary,
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.07,
     shadowRadius: 20,
@@ -248,10 +248,10 @@ const styles = StyleSheet.create({
     width: 160,
     height: 160,
     borderRadius: 80,
-    backgroundColor: "#D9D9D9",
+    backgroundColor: Colors.borderFaint,
     borderWidth: 3,
-    borderColor: "#FFFFFF",
-    shadowColor: "#000",
+    borderColor: Colors.background,
+    shadowColor: Colors.textPrimary,
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.07,
     shadowRadius: 20,
@@ -271,7 +271,7 @@ const styles = StyleSheet.create({
     width: 56,
     height: 56,
     borderRadius: 10,
-    backgroundColor: "#F7F7F7",
+    backgroundColor: Colors.backgroundMuted,
     justifyContent: "center",
     alignItems: "center",
     overflow: "hidden",
@@ -291,7 +291,7 @@ const styles = StyleSheet.create({
   },
   rowSubtext: {
     fontSize: 13,
-    color: "#989898",
+    color: Colors.textPlaceholder,
     lineHeight: 18,
   },
 });

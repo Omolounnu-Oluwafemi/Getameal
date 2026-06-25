@@ -203,7 +203,7 @@ export default function FoodSafetyAgreement({
 
         {/* Gradient — card + slider only */}
         <LinearGradient
-          colors={["rgba(255,255,255,0)", "#ffffff"]}
+          colors={[Colors.whiteTransparent, Colors.background]}
           locations={[0, 0.3]}
           style={styles.gradientBg}
         >
@@ -240,11 +240,11 @@ export default function FoodSafetyAgreement({
                 ]}
                 {...panResponder.panHandlers}
               >
-                <Ionicons name="chevron-forward" size={22} color="#fff" />
+                <Ionicons name="chevron-forward" size={22} color={Colors.background} />
                 <Ionicons
                   name="chevron-forward"
                   size={22}
-                  color="#fff"
+                  color={Colors.background}
                   style={{ marginLeft: -10 }}
                 />
               </Animated.View>
@@ -282,8 +282,8 @@ const styles = StyleSheet.create({
     height: 38,
     borderRadius: 50,
     borderWidth: 1,
-    borderColor: "#EDEDED",
-    backgroundColor: "#F7F7F7",
+    borderColor: Colors.backgroundBorder,
+    backgroundColor: Colors.backgroundMuted,
     alignItems: "center",
     justifyContent: "center",
   },
@@ -336,7 +336,7 @@ const styles = StyleSheet.create({
     height: "100%",
   },
   card: {
-    backgroundColor: "#FFFFFF",
+    backgroundColor: Colors.background,
     borderRadius: 20,
     height: 279,
     paddingTop: 34,
@@ -344,7 +344,7 @@ const styles = StyleSheet.create({
     paddingBottom: 15,
     paddingLeft: 16,
     gap: 30,
-    shadowColor: "#000",
+    shadowColor: Colors.textPrimary,
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.05,
     shadowRadius: 20,
@@ -360,7 +360,7 @@ const styles = StyleSheet.create({
     width: 42,
     height: 42,
     borderRadius: 60,
-    backgroundColor: "#EAFFE5",
+    backgroundColor: Colors.successBg,
     padding: 3,
     alignItems: "center",
     justifyContent: "center",
@@ -373,13 +373,13 @@ const styles = StyleSheet.create({
   },
   cardBody: {
     fontSize: 14,
-    color: "#222222",
+    color: Colors.textSecondary,
     lineHeight: 22,
     paddingHorizontal: 4,
   },
   divider: {
     height: 1,
-    backgroundColor: "#EDEDED",
+    backgroundColor: Colors.backgroundBorder,
   },
   slideHint: {
     fontSize: 14,
@@ -392,7 +392,7 @@ const styles = StyleSheet.create({
   },
   sliderTrack: {
     height: 65,
-    backgroundColor: "#EDEDED",
+    backgroundColor: Colors.backgroundBorder,
     borderRadius: 60,
     justifyContent: "center",
     alignItems: "center",
@@ -402,7 +402,7 @@ const styles = StyleSheet.create({
   sliderLabel: {
     fontSize: 15,
     fontWeight: "500",
-    color: "#989898",
+    color: Colors.textPlaceholder,
   },
   sliderKnob: {
     position: "absolute",
@@ -410,11 +410,11 @@ const styles = StyleSheet.create({
     width: KNOB_SIZE,
     height: 57,
     borderRadius: 60,
-    backgroundColor: "#209D01",
+    backgroundColor: Colors.cookingTime,
     alignItems: "center",
     justifyContent: "center",
     flexDirection: "row",
-    shadowColor: "#000",
+    shadowColor: Colors.textPrimary,
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.16,
     shadowRadius: 20,
@@ -423,13 +423,13 @@ const styles = StyleSheet.create({
   continueBtn: {
     height: 52,
     borderRadius: 60,
-    backgroundColor: "#209D01",
+    backgroundColor: Colors.cookingTime,
     alignItems: "center",
     justifyContent: "center",
   },
   continueBtnText: {
     fontSize: 14,
     fontWeight: "600",
-    color: "#fff",
+    color: Colors.background,
   },
 });

@@ -20,6 +20,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import TextInput from '@/components/TextInput';
 import Button from '@/components/Button';
 import AlphaLogo from '@/assets/logoBlack.svg';
+import { Colors } from '@/screens/constants/colors';
 
 const { width, height } = Dimensions.get('window');
 
@@ -47,8 +48,8 @@ export default function WelcomeBack({ navigation }: WelcomeBackProps) {
       resizeMode="cover"
     >
       <SafeAreaView edges={['top']} style={styles.safeArea}>
-        <StatusBar barStyle="dark-content" translucent backgroundColor="transparent" />
-        
+        <StatusBar barStyle="dark-content" translucent backgroundColor={Colors.transparent} />
+
         <KeyboardAvoidingView
           behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
           style={styles.keyboardView}
@@ -61,21 +62,16 @@ export default function WelcomeBack({ navigation }: WelcomeBackProps) {
               keyboardShouldPersistTaps="handled"
               bounces={false}
             >
-              {/* Spacer to push content down to 40% */}
               <View style={styles.topSpacer} />
 
-              {/* Gradient container with content */}
               <LinearGradient
-                colors={['rgba(255, 255, 255, 0.14)', 'rgb(255, 255, 255)', 'rgba(255, 255, 255, 1)']}
+                colors={[Colors.whiteSubtle, Colors.background, Colors.background]}
                 style={styles.gradient}
                 locations={[0, 0.1, 0.4]}
               >
                 <View style={styles.contentWrapper}>
                   <View style={styles.logo}>
-                    <AlphaLogo
-                      width={38.8}
-                      height={61.5}
-                    />           
+                    <AlphaLogo width={38.8} height={61.5} />
                   </View>
 
                   <Text style={styles.title}>Welcome Back</Text>
@@ -83,8 +79,7 @@ export default function WelcomeBack({ navigation }: WelcomeBackProps) {
                     Your favorite cooks are cooking again.
                   </Text>
                 </View>
-                      
-                {/* Content Card with inputs */}
+
                 <View style={styles.contentCard}>
                   <View style={styles.buttonContainer}>
                     <TextInput
@@ -97,16 +92,16 @@ export default function WelcomeBack({ navigation }: WelcomeBackProps) {
                       autoCapitalize="none"
                       autoComplete="email"
                     />
-                          
+
                     <Button
                       title="Continue"
                       onPress={() => navigation.navigate('ConfirmEmail', { email, isLogin: true })}
                       variant="primary"
                       size='large'
-                      style={{ backgroundColor: '#1B8601' }}
+                      style={{ backgroundColor: Colors.brandGreen }}
                     />
                   </View>
-                        
+
                   <TouchableOpacity onPress={() => navigation.navigate("SplashTwo")}>
                     <Text style={styles.AlreadyText}>
                       Don't have an account? <Text style={styles.loginLink}>Sign up</Text>
@@ -150,11 +145,11 @@ const styles = StyleSheet.create({
   logo: {
     alignSelf: 'center',
     marginBottom: 40,
-    backgroundColor: '#fff',
+    backgroundColor: Colors.background,
     borderRadius: 20,
     paddingHorizontal: 37.6,
     paddingVertical: 26.25,
-    shadowColor: '#000',
+    shadowColor: Colors.textPrimary,
     shadowOffset: { width: 1, height: 3 },
     shadowOpacity: 0.2,
     shadowRadius: 6,
@@ -163,14 +158,14 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     fontWeight: '700',
-    color: '#000000', 
+    color: Colors.textPrimary,
     marginBottom: 12,
     textAlign: 'center',
   },
   subtitle: {
     fontSize: 16,
     fontWeight: '400',
-    color: '#5C5C5C',
+    color: Colors.gray700,
     lineHeight: 22,
     textAlign: 'center',
   },
@@ -186,7 +181,7 @@ const styles = StyleSheet.create({
     textAlign: 'left',
     fontSize: 14,
     fontWeight: '400',
-    color: '#989898',
+    color: Colors.textPlaceholder,
     marginTop: -10,
     marginBottom: 30,
     paddingLeft: 15,
@@ -195,11 +190,11 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 14,
     fontWeight: '600',
-    color: '#000',
+    color: Colors.textPrimary,
     marginTop: 50,
   },
   loginLink: {
     fontWeight: '700',
-    color: '#000',
+    color: Colors.textPrimary,
   },
 });
