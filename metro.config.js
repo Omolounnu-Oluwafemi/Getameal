@@ -1,4 +1,10 @@
 const { getDefaultConfig } = require("expo/metro-config");
+const path = require("path");
+
+const nestedRNPath = path.resolve(
+  __dirname,
+  "node_modules/react-native/node_modules/react-native"
+);
 
 module.exports = (() => {
   const config = getDefaultConfig(__dirname);
@@ -13,6 +19,12 @@ module.exports = (() => {
     ...resolver,
     assetExts: resolver.assetExts.filter((ext) => ext !== "svg"),
     sourceExts: [...resolver.sourceExts, "svg"],
+    extraNodeModules: {
+      "react-native": path.resolve(__dirname, "node_modules/react-native"),
+    },
+    blockList: [
+      new RegExp(`^${nestedRNPath.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}.*`),
+    ],
   };
 
   return config;

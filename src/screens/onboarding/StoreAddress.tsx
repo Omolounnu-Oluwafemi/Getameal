@@ -81,7 +81,7 @@ export default function StoreAddress({ navigation }: StoreAddressProps) {
         </View>
 
         <LinearGradient
-          colors={["rgba(255, 255, 255, 0)", "#ffffff"]}
+          colors={[Colors.whiteTransparent, Colors.background]}
           locations={[0, 0.7]}
           style={styles.gradientBg}
         >
@@ -122,7 +122,7 @@ export default function StoreAddress({ navigation }: StoreAddressProps) {
                     {city || "Example: Lagos"}
                   </Text>
                 </View>
-                <Ionicons name="chevron-forward" size={18} color="#989898" />
+                <Ionicons name="chevron-forward" size={18} color={Colors.textPlaceholder} />
               </TouchableOpacity>
 
               <TouchableOpacity
@@ -147,7 +147,7 @@ export default function StoreAddress({ navigation }: StoreAddressProps) {
                     {fullAddress || "Example: 123 Admiralty way lekki"}
                   </Text>
                 </View>
-                <Ionicons name="chevron-forward" size={18} color="#989898" />
+                <Ionicons name="chevron-forward" size={18} color={Colors.textPlaceholder} />
               </TouchableOpacity>
 
               <TouchableOpacity
@@ -175,7 +175,7 @@ export default function StoreAddress({ navigation }: StoreAddressProps) {
                     {pickupLandmark || "Example: Sabo, Yaba"}
                   </Text>
                 </View>
-                <Ionicons name="chevron-forward" size={18} color="#989898" />
+                <Ionicons name="chevron-forward" size={18} color={Colors.textPlaceholder} />
               </TouchableOpacity>
             </View>
 
@@ -212,8 +212,8 @@ export default function StoreAddress({ navigation }: StoreAddressProps) {
         title="Pickup landmark"
         label="Pickup landmark"
         placeholder="Example: Mega chicken ikate"
-        placeholderStyle={{ fontWeight: "600", fontSize: 20, color: "#C3C3C3" }}
-        inputStyle={{ fontWeight: "600", fontSize: 20, color: "#222222" }}
+        placeholderStyle={{ fontWeight: "600", fontSize: 20, color: Colors.textVeryLight }}
+        inputStyle={{ fontWeight: "600", fontSize: 20, color: Colors.textSecondary }}
         value={tempLandmark}
         onChangeText={setTempLandmark}
         onSave={() => {
@@ -252,8 +252,8 @@ const styles = StyleSheet.create({
     height: 38,
     borderRadius: 50,
     borderWidth: 1,
-    borderColor: "#EDEDED",
-    backgroundColor: "#F7F7F7",
+    borderColor: Colors.backgroundBorder,
+    backgroundColor: Colors.backgroundMuted,
     alignItems: "center",
     justifyContent: "center",
   },
@@ -299,7 +299,7 @@ const styles = StyleSheet.create({
     height: 56,
     borderRadius: 10,
     padding: 5,
-    backgroundColor: "#F7F7F7",
+    backgroundColor: Colors.backgroundMuted,
     justifyContent: "center",
     alignItems: "center",
   },
@@ -314,7 +314,7 @@ const styles = StyleSheet.create({
   },
   rowValue: {
     fontSize: 14,
-    color: "#989898",
+    color: Colors.textPlaceholder,
   },
   rowPlaceholder: {
     fontSize: 13,

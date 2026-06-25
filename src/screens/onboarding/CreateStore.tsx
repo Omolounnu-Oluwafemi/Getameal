@@ -1,4 +1,3 @@
-import ChefsIllustration from "@/assets/onboarding/2Chefs.svg";
 import StoreIcon from "@/assets/onboarding/clarity_store-line.svg";
 import LinkIcon from "@/assets/onboarding/si_link-duotone.svg";
 import PhoneIcon from "@/assets/onboarding/solar_phone-linear.svg";
@@ -12,6 +11,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import React, { useState } from "react";
 import {
   Dimensions,
+  Image,
   ImageBackground,
   ScrollView,
   StatusBar,
@@ -105,7 +105,7 @@ export default function CreateStore({ navigation }: CreateStoreProps) {
         </View>
 
         <LinearGradient
-          colors={["rgba(255, 255, 255, 0)", "#ffffff"]}
+          colors={[Colors.whiteTransparent, Colors.background]}
           locations={[0, 0.7]}
           style={styles.gradientBg}
         >
@@ -120,7 +120,11 @@ export default function CreateStore({ navigation }: CreateStoreProps) {
             <Text style={styles.subtitle}>Takes less than 2 mins</Text>
 
             <View style={styles.illustrationWrap}>
-              <ChefsIllustration width="100%" height="100%" />
+              <Image
+                source={require('@/assets/onboarding/2Chefs.png')}
+                style={{ width: '100%', height: '100%' }}
+                resizeMode="contain"
+              />
             </View>
 
             {/* Form rows */}
@@ -145,7 +149,7 @@ export default function CreateStore({ navigation }: CreateStoreProps) {
                     {storeName || "Example: Amaka's Kitchen"}
                   </Text>
                 </View>
-                <Ionicons name="chevron-forward" size={18} color="#989898" />
+                <Ionicons name="chevron-forward" size={18} color={Colors.textPlaceholder} />
               </TouchableOpacity>
 
               <TouchableOpacity
@@ -172,7 +176,7 @@ export default function CreateStore({ navigation }: CreateStoreProps) {
                       : "Example: getameal.com/amaka-kitchen"}
                   </Text>
                 </View>
-                <Ionicons name="chevron-forward" size={18} color="#989898" />
+                <Ionicons name="chevron-forward" size={18} color={Colors.textPlaceholder} />
               </TouchableOpacity>
 
               <TouchableOpacity
@@ -197,7 +201,7 @@ export default function CreateStore({ navigation }: CreateStoreProps) {
                     {phoneNumber || "Example: 080123456789"}
                   </Text>
                 </View>
-                <Ionicons name="chevron-forward" size={18} color="#989898" />
+                <Ionicons name="chevron-forward" size={18} color={Colors.textPlaceholder} />
               </TouchableOpacity>
             </View>
 
@@ -283,8 +287,8 @@ const styles = StyleSheet.create({
     height: 38,
     borderRadius: 50,
     borderWidth: 1,
-    borderColor: "#EDEDED",
-    backgroundColor: "#F7F7F7",
+    borderColor: Colors.backgroundBorder,
+    backgroundColor: Colors.backgroundMuted,
     alignItems: "center",
     justifyContent: "center",
   },
@@ -309,7 +313,7 @@ const styles = StyleSheet.create({
   },
   subtitle: {
     fontSize: 14,
-    color: "#797979",
+    color: Colors.gray550,
     textAlign: "center",
   },
   illustrationWrap: {
@@ -340,7 +344,7 @@ const styles = StyleSheet.create({
     height: 56,
     borderRadius: 10,
     padding: 5,
-    backgroundColor: "#F7F7F7",
+    backgroundColor: Colors.backgroundMuted,
     justifyContent: "center",
     alignItems: "center",
   },
@@ -355,7 +359,7 @@ const styles = StyleSheet.create({
   },
   rowValue: {
     fontSize: 14,
-    color: "#989898",
+    color: Colors.textPlaceholder,
   },
   rowPlaceholder: {
     fontSize: 13,

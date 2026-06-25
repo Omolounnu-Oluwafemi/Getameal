@@ -264,7 +264,13 @@ export default function Register({ navigation }: RegisterProps) {
                     onPress={() => {}}
                     variant="outline"
                     fullWidth
-                    icon={<Ionicons name="logo-apple" size={20} color={Colors.primary} />}
+                    icon={
+                      <Ionicons
+                        name="logo-apple"
+                        size={20}
+                        color={Colors.primary}
+                      />
+                    }
                     iconPosition="left"
                   />
 
